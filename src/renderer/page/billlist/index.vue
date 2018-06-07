@@ -39,7 +39,7 @@
         <!--工具条-->
         <el-col :span="24" class="toolbar">
             <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
-            <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :current-page="filters.pageNo" :page-size="filters.pageSize" :total="total" style="float:right;">
+            <el-pagination background layout="prev, pager, next" @current-change="handleCurrentChange" :current-page="filters.pageNo" :page-size="filters.pageSize" :total="total" style="float:right;">
             </el-pagination>
         </el-col>
 
@@ -128,7 +128,8 @@
           //   message: '查询成功',
           //   type: 'success'
           // })
-        }, () => {
+        }, (err) => {
+          console.log(err.message)
           this.$message({
             message: '查询失败',
             type: 'error'

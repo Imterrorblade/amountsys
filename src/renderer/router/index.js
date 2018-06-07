@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -22,6 +22,21 @@ export default new Router({
         name: 'billlist',
         component: require('@/page/billlist').default
       }]
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: require('@/page/login').default
     }
   ]
 })
+// router.beforeEach((to, from, next) => {
+//   next()
+//   if (!localStorage.getItem('username')) {
+//     next()
+//   } else {
+//     // next('/login')
+//     next({path: '/login'})
+//   }
+// })
+export default router

@@ -3,7 +3,15 @@ const models = [{
   model: {
     content: String,
     date: Date,
-    money: Number
+    money: Number,
+    user: String
+  }
+}, {
+  name: 'BillUser',
+  __id: 'username',
+  model: {
+    username: String,
+    password: String
   }
 }]
 module.exports = models

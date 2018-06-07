@@ -1,12 +1,14 @@
 const { mongoose } = require('./index')
 const models = require('./models')
 const modelMap = {
-  models: {}
+  models: {},
+  modelstag: {}
 }
 for (let i = 0; i < models.length; i++) {
   let schema = new mongoose.Schema(models[i].model)
   modelMap[models[i].name] = mongoose.model(models[i].name, schema)
   modelMap.models[models[i].name] = models[i].model
+  modelMap.modelstag[models[i].name] = models[i].__id
 }
 modelMap.methods = {
   formatParam: function (target, param) {

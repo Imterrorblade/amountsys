@@ -15,6 +15,7 @@ const service = {
   updataBill: function (param) {
     if (param.id) {
       return new Promise(function (resolve, reject) {
+        param.username = localStorage('username')
         dataApi.findByIdAndUpdate('Bill', param, function (response) {
           if (response instanceof Error) {
             reject(response)
@@ -31,7 +32,8 @@ const service = {
     let param = JSON.parse(JSON.stringify(filter))
     return new Promise(function (resolve, reject) {
       param.data.date = {
-        '$lte': param.data.date
+        '$lte': param.data.date,
+        'username': localStorage.getItem('username')
       }
       dataApi.find('Bill', param, function (response) {
         if (response instanceof Error) {
@@ -45,6 +47,28 @@ const service = {
   removeBill: function (param) {
     return new Promise(function (resolve, reject) {
       dataApi.findByIdAndRemove('Bill', param, function (response) {
+        if (response instanceof Error) {
+          reject(response)
+        } else {
+          resolve(response)
+        }
+      })
+    })
+  },
+  registerBillUser (param) {
+    return new Promise(function (resolve, reject) {
+      dataApi.registerBillUser(param, function (response) {
+        if (response instanceof Error) {
+          reject(response)
+        } else {
+          resolve(response)
+        }
+      })
+    })
+  },
+  loginBillUser (param) {
+    return new Promise(function (resolve, reject) {
+      dataApi.loginBillUser(param, function (response) {
         if (response instanceof Error) {
           reject(response)
         } else {

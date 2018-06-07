@@ -4,8 +4,13 @@
             <el-col :span="10" class="logo logo-width" >
                 账目管理工具
             </el-col>
-            <el-col :span="4" class="userinfo">
-                <span class="userinfo-inner"><i class=""></i>{{username}}</span>
+            <el-col v-if="username" :span="4" class="userinfo">
+                <span  class="userinfo-inner"><i class=""></i>{{username}}</span>
+                <el-button @click="loginOUt" size="small" type="danger" plain="">退出</el-button>
+            </el-col>
+            <el-col v-if="!username" :span="10" class="userinfo">
+                <el-button @click="changeLoginType('login')" size="small" type="danger" plain="">登录</el-button> 
+                <el-button @click="changeLoginType('register')" size="small" type="danger" plain="">注册</el-button>
             </el-col>
         </el-col>
     </el-header>
@@ -14,7 +19,20 @@
   export default {
     data () {
       return {
-        username: '杨**'
+      }
+    },
+    methods: {
+      changeLoginType (type) {
+        this.$store.dispatch('changeLoginType', type)
+      },
+      loginOut () {
+        localStorage.setItem('username', '')
+        this.$route.push('/')
+      }
+    },
+    computed: {
+      username () {
+        return localStorage.getItem('username')
       }
     }
   }
