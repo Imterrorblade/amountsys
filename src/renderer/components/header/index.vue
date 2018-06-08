@@ -6,7 +6,7 @@
             </el-col>
             <el-col v-if="username" :span="4" class="userinfo">
                 <span  class="userinfo-inner"><i class=""></i>{{username}}</span>
-                <el-button @click="loginOUt" size="small" type="danger" plain="">退出</el-button>
+                <el-button @click="loginOut" size="small" type="danger" plain="">退出</el-button>
             </el-col>
             <el-col v-if="!username" :span="10" class="userinfo">
                 <el-button @click="changeLoginType('login')" size="small" type="danger" plain="">登录</el-button> 
@@ -27,7 +27,7 @@
       },
       loginOut () {
         localStorage.setItem('username', '')
-        this.$route.push('/')
+        this.$router.push('/')
       }
     },
     computed: {

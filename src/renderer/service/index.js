@@ -13,9 +13,9 @@ const service = {
     })
   },
   updataBill: function (param) {
+    param.user = localStorage.getItem('username')
     if (param.id) {
       return new Promise(function (resolve, reject) {
-        param.username = localStorage('username')
         dataApi.findByIdAndUpdate('Bill', param, function (response) {
           if (response instanceof Error) {
             reject(response)
@@ -32,9 +32,9 @@ const service = {
     let param = JSON.parse(JSON.stringify(filter))
     return new Promise(function (resolve, reject) {
       param.data.date = {
-        '$lte': param.data.date,
-        'username': localStorage.getItem('username')
+        '$lte': param.data.date
       }
+      param.data.user = localStorage.getItem('username')
       dataApi.find('Bill', param, function (response) {
         if (response instanceof Error) {
           reject(response)

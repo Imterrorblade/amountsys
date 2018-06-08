@@ -94,7 +94,7 @@
               message: '登录成功',
               type: 'success'
             })
-            this.$route.push('/')
+            this.$router.push('/')
           })
         }).catch((err) => {
           console.log(err)

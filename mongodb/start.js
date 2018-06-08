@@ -1,6 +1,6 @@
 const exec = require('child_process').exec
 const path = require('path')
-exec(path.resolve(__dirname, 'mongodb\\bin\\mongod.exe --dbpath ') + path.resolve(__dirname, 'mongodbdata'), function (err, data) {
+exec(path.resolve(__dirname, 'mongodb\\bin\\mongod.exe --dbpath ') + path.resolve(__dirname, 'db\\data'), function (err, data) {
   if (err) {
     console.log(err)
     return

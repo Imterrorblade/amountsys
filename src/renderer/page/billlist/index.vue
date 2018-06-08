@@ -184,9 +184,13 @@
               message: this.dialogType + '成功',
               type: 'success'
             })
+          }).catch((err) => {
+            console.log(err)
+            this.addLoading = false
           })
         }, function (err) {
           console.log(err)
+          this.addLoading = false
         })
       },
       selsChange: function (sels) {

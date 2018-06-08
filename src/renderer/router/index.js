@@ -30,13 +30,15 @@ const router = new Router({
     }
   ]
 })
-// router.beforeEach((to, from, next) => {
-//   next()
-//   if (!localStorage.getItem('username')) {
-//     next()
-//   } else {
-//     // next('/login')
-//     next({path: '/login'})
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login') {
+    next()
+  } else {
+    if (localStorage.getItem('username')) {
+      next()
+    } else {
+      next({path: '/login'})
+    }
+  }
+})
 export default router

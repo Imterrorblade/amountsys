@@ -20,7 +20,7 @@ const entityDao = {
   },
   checkUser: function (target, model, callback) {
     if (modelMap.models[target].user) {
-      if (model.username) {
+      if (model.user) {
         callback()
       } else {
         throw new Error('请用户登录')
