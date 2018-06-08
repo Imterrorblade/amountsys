@@ -5,7 +5,7 @@ build/*
 !build/icons
 coverage
 mongodb/mongodb/
-mongodb/mongodbdata/
+mongodb/db/
 node_modules/
 npm-debug.log
 npm-debug.log.*
