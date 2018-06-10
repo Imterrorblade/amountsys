@@ -45,6 +45,7 @@ const service = {
     })
   },
   removeBill: function (param) {
+    param.user = localStorage.getItem('username')
     return new Promise(function (resolve, reject) {
       dataApi.findByIdAndRemove('Bill', param, function (response) {
         if (response instanceof Error) {
@@ -55,6 +56,8 @@ const service = {
       })
     })
   },
+
+  // 用户接口
   registerBillUser (param) {
     return new Promise(function (resolve, reject) {
       dataApi.registerBillUser(param, function (response) {
@@ -66,9 +69,31 @@ const service = {
       })
     })
   },
+  checkUserRepeat (param) {
+    return new Promise(function (resolve, reject) {
+      dataApi.findOne('BillUser', {username: param.username}, function (response) {
+        if (response) {
+          reject(new Error('用户名已存在'))
+        } else {
+          resolve()
+        }
+      })
+    })
+  },
   loginBillUser (param) {
     return new Promise(function (resolve, reject) {
       dataApi.loginBillUser(param, function (response) {
+        if (response instanceof Error) {
+          reject(response)
+        } else {
+          resolve(response)
+        }
+      })
+    })
+  },
+  setWorkPath (path) {
+    return new Promise(function (resolve, reject) {
+      dataApi.setWorkPath(path, (response) => {
         if (response instanceof Error) {
           reject(response)
         } else {

@@ -4,38 +4,80 @@
             <el-col :span="10" class="logo logo-width" >
                 账目管理工具
             </el-col>
-            <el-col v-if="username" :span="4" class="userinfo">
-                <span  class="userinfo-inner"><i class=""></i>{{username}}</span>
-                <el-button @click="loginOut" size="small" type="danger" plain="">退出</el-button>
+            <el-col style="min-width:400px" :span="10" class="userinfo">
+                <span v-if="!username">
+                    <el-button @click="changeLoginType('login')" size="small" type="danger" plain="">登录</el-button> 
+                     <el-button @click="changeLoginType('register')" size="small" type="danger" plain="">注册</el-button>
+                </span>  
+                <span  v-if="username">
+                    <span  class="userinfo-inner"><i class=""></i>{{username}}</span>
+                </span>
+                <el-dropdown style="margin-left:20px;" @command="handle">
+                    <span class="">
+                        <i class="el-icon-setting el-icon--right el-dropdown-linkel-dropdown-link"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item v-if="username" command="loginOut" >退出</el-dropdown-item>
+                        <el-dropdown-item command="setPath">工作目录</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>        
             </el-col>
-            <el-col v-if="!username" :span="10" class="userinfo">
-                <el-button @click="changeLoginType('login')" size="small" type="danger" plain="">登录</el-button> 
-                <el-button @click="changeLoginType('register')" size="small" type="danger" plain="">注册</el-button>
-            </el-col>
+            <!-- <el-dialog></el-dialog> -->
         </el-col>
     </el-header>
 </template>
 <script>
-  export default {
-    data () {
-      return {
-      }
+import service from '../../service/index'
+export default {
+  data () {
+    return {
+    }
+  },
+  methods: {
+    changeLoginType (type) {
+      this.$store.dispatch('changeLoginType', type)
     },
-    methods: {
-      changeLoginType (type) {
-        this.$store.dispatch('changeLoginType', type)
-      },
-      loginOut () {
-        localStorage.setItem('username', '')
-        this.$router.push('/')
-      }
+    loginOut () {
+      this.$store.dispatch('loginOut')
+      this.$router.push('/login')
     },
-    computed: {
-      username () {
-        return localStorage.getItem('username')
-      }
+    setPath () {
+      console.log(localStorage.getItem('workpath'))
+      this.$prompt('请输入数据库路径(选中到mongod.exe)', '路径设置', {
+        inputPattern: /^[a-zA-Z]:(\\\w+)+\\mongod.exe$/,
+        inputErrorMessage: '路径匹配错误错误',
+        inputValue: localStorage.getItem('workpath') ? localStorage.getItem('workpath') : ''
+      }).then(({ value }) => {
+        service.setWorkPath(value).then((res) => {
+          localStorage.setItem('workpath', value)
+          this.$message({
+            message: '路径设置成功',
+            type: 'success'
+          })
+        }).catch((err) => {
+          if (err) {
+            console.log(err)
+          }
+        })
+      }).catch((err) => {
+        //   this.$message({
+        //     message: '路径设置失败',
+        //     type: 'error'
+        //   })
+        console.log(err)
+      })
+    },
+    handle (command) {
+      this[command]()
+      console.log(command)
+    }
+  },
+  computed: {
+    username () {
+      return this.$store.getters.loginUser.username
     }
   }
+}
 </script>
 <style lang="less">
     @import "../../style/config";
@@ -46,7 +88,7 @@
         color: #fff;
         .userinfo {
             text-align: right;
-            padding-right: 35px;
+            padding-right: 10px;
             float: right;
             .userinfo-inner {
                 cursor: pointer;

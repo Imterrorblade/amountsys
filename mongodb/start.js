@@ -1,17 +1,21 @@
 const exec = require('child_process').exec
-const path = require('path')
-exec(path.resolve(__dirname, 'mongodb\\bin\\mongod.exe --dbpath ') + path.resolve(__dirname, 'db\\data'), function (err, data) {
-  if (err) {
-    console.log(err)
-    return
+// const path = require('path')
+const fs = require('fs')
+module.exports = {
+  start () {
+    fs.readFile('.\\config.json', (err, fd) => {
+      if (err) {
+        console.log(err)
+      }
+      exec('' + ' --dbpath ' + '..\\data\\db', function (err, data) {
+        if (err) {
+          console.log(err)
+          return
+        }
+        console.log('mongodb启动成功')
+        console.log(data)
+      })
+      console.log(fd)
+    })
   }
-  console.log('mongodb启动成功')
-  console.log(data)
-})
-console.log(__dirname)
-console.log('执行完毕')
-exec('dir', function (err, data) {
-  console.log(__dirname)
-  console.log(err)
-  console.log(data)
-})
+}

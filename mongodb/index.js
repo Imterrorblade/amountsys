@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const dataBase = {
   mongoose: mongoose,
   _timer: null,
-  _url: 'mongodb://localhost/admin',
+  _url: 'mongodb://localhost/test',
   connect: function () {
     mongoose.connect(this._url)
     let db = mongoose.connection

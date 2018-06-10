@@ -4,7 +4,7 @@
                  unique-opened router
                  class="el-menu-vertical-demo">
             <template v-for="(item, index) in menuList">
-                <el-submenu :index="index+''">
+                <el-submenu :key="index+''" :index="index+''">
                     <template slot="title"><i :class="item.iconCls"></i>{{item.label}}</template>
                     <el-menu-item v-for="(it, i) in item.children" :index="it.path" :key="index + '-' + i">{{it.label}}</el-menu-item>
                 </el-submenu>

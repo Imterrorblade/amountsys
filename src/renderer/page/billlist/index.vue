@@ -7,7 +7,7 @@
                   <el-date-picker type="date" placeholder="截止日期" v-model="filters.data.date"></el-date-picker>
                 </el-form-item>
                 <el-form-item>
-                    <el-button @click="getDataList" type="primary">查询</el-button>
+                    <el-button @click="getDataList" type="primary" icon="el-icon-search">查询</el-button>
                 </el-form-item>
                 <el-form-item>
                     <el-button @click="handleAdd" type="primary">新增</el-button>
@@ -17,15 +17,15 @@
 
         <!--列表-->
         <el-col :span="24" class="bill-table">
-            <el-table :data="dataList" highlight-current-row v-loading="listLoading" @selection-change="selsChange"
-                      style="width: 100%;">
-                <el-table-column type="selection" width="55">
+            <el-table :data="dataList" highlight-current-row v-loading="listLoading" border
+               style="width: 100%;">
+                <!-- <el-table-column type="selection" width="55">
+                </el-table-column> -->
+                <el-table-column prop="date" label="日期" width="250" :formatter="formatTableDate" >
                 </el-table-column>
-                <el-table-column prop="date" label="日期" width="250" :formatter="formatTableDate" sortable>
+                <el-table-column prop="content" label="商品" min-width="200" >
                 </el-table-column>
-                <el-table-column prop="content" label="商品" min-width="200" sortable>
-                </el-table-column>
-                <el-table-column prop="money" label="消费（元）" width="200" sortable>
+                <el-table-column prop="money" label="消费（元）" width="200" >
                 </el-table-column>
                 <el-table-column label="操作" width="150">
                     <template scope="scope">
@@ -38,8 +38,8 @@
 
         <!--工具条-->
         <el-col :span="24" class="toolbar">
-            <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
-            <el-pagination background layout="prev, pager, next" @current-change="handleCurrentChange" :current-page="filters.pageNo" :page-size="filters.pageSize" :total="total" style="float:right;">
+            <!-- <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button> -->
+            <el-pagination background layout="total, sizes, prev, pager, next" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="filters.pageNo" :page-size="filters.pageSize" :page-sizes="[10, 20, 50, 100]" :total="total" style="float:right;">
             </el-pagination>
         </el-col>
 
@@ -115,15 +115,25 @@
       formatTableDate (row, column, value, index) {
         return Util.formatDate.format(value)
       },
+      handleSizeChange (val) {
+        this.filters.pageNo = 1
+        this.filters.pageSize = val
+        this.getDataList()
+      },
       handleCurrentChange (val) {
         this.filters.pageNo = val
         this.getDataList()
       },
       // 获取账单数据
       getDataList () {
-        service.getBillList(this.filters).then((res) => {
+        const filters = Object.assign({}, this.filters)
+        filters.data.date.setHours(23)
+        filters.data.date.setMinutes(59)
+        this.listLoading = true
+        service.getBillList(filters).then((res) => {
           this.dataList = Object.assign([], res.data)
           this.total = res.count
+          this.listLoading = false
           // this.$message({
           //   message: '查询成功',
           //   type: 'success'
@@ -134,6 +144,7 @@
             message: '查询失败',
             type: 'error'
           })
+          this.listLoading = false
         })
       },
       // 删除
@@ -141,19 +152,17 @@
         this.$confirm('确认删除该记录吗?', '提示', {
           type: 'warning'
         }).then(() => {
-          this.listLoading = true
           service.removeBill({id: row.id}).then((response) => {
             this.$message({
               message: '删除成功',
               type: 'success'
             })
-            this.listLoading = false
             this.getDataList()
           }, (err) => {
             console.log(err)
-            this.listLoading = false
           })
-        }).catch(() => {
+        }).catch((err) => {
+          console.log(err)
         })
       },
       // 显示编辑界面add
