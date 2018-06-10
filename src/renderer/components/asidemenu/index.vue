@@ -26,7 +26,13 @@
           label: '用户管理',
           children: [{
             label: '个人信息',
-            path: 'userinfo'
+            path: '/page/userinfo'
+          }]
+        }, {
+          label: '统计分析',
+          children: [{
+            label: '账单统计',
+            path: '/page/analysis'
           }]
         }]
       }

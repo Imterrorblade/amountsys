@@ -1,4 +1,4 @@
-require('./start')
+const mongod = require('./init')
 const mongoose = require('mongoose')
 const dataBase = {
   mongoose: mongoose,
@@ -24,7 +24,11 @@ const dataBase = {
     db.once('open', function () {
       console.log('mongodb连接成功')
     })
+  },
+  start: function () {
+    mongod.start()
+    this.connect()
   }
 }
-dataBase.connect()
+dataBase.start()
 module.exports = dataBase

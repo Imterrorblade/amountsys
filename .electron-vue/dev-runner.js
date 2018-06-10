@@ -11,6 +11,7 @@ const webpackHotMiddleware = require('webpack-hot-middleware')
 
 const mainConfig = require('./webpack.main.config')
 const rendererConfig = require('./webpack.renderer.config')
+// const mongodbConfig = require('./webpack.mongodb.config')
 const dataBase = require('../mongodb/index.js');
 
 let electronProcess = null
@@ -145,7 +146,9 @@ function electronLog (data, color) {
     )
   }
 }
-
+// function startMongodb(){
+//   dataBase.start()
+// }
 function greeting () {
   const cols = process.stdout.columns
   let text = ''
@@ -166,7 +169,7 @@ function greeting () {
 
 function init () {
   greeting()
-
+  
   Promise.all([startRenderer(), startMain()])
     .then(() => {
       startElectron()
@@ -174,6 +177,7 @@ function init () {
     .catch(err => {
       console.error(err)
     })
+    // startMongodb()
 }
 
 init()

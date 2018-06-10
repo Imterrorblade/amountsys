@@ -30,6 +30,7 @@
     .container {
         width: 100%;
         height: 100%;
+        min-width: 900px;
         .content-wrapper {
             background-color: #fff;
             box-sizing: border-box;

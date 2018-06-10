@@ -21,6 +21,14 @@ const router = new Router({
         path: 'billlist',
         name: 'billlist',
         component: require('@/page/billlist').default
+      }, {
+        path: 'userinfo',
+        name: 'userinfo',
+        component: require('@/page/userinfo').defalult
+      }, {
+        path: 'analysis',
+        name: 'analysis',
+        component: require('@/page/analysis').defalult
       }]
     },
     {
@@ -36,6 +44,7 @@ router.beforeEach((to, from, next) => {
   } else {
     if (localStorage.getItem('username')) {
       next()
+      console.log(to)
     } else {
       next({path: '/login'})
     }

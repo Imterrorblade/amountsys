@@ -1,6 +1,7 @@
 const modelMap = require('./modelMap')
 const __path = require('path')
 const fs = require('fs')
+const mongod = require('./start')
 const entityDao = {
   checkOnlyTag: function (target, model, callback) {
     const onlytag = modelMap.modelstag[target]// 唯一校验字段
@@ -139,6 +140,7 @@ const entityDao = {
     result.workpath = path
     fs.writeFileSync(__path.resolve(__dirname, 'config.json'), JSON.stringify(result))
     callback()
+    mongod.start()
   }
 }
 export default entityDao
