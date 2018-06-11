@@ -24,11 +24,11 @@ const router = new Router({
       }, {
         path: 'userinfo',
         name: 'userinfo',
-        component: require('@/page/userinfo').defalult
+        component: require('@/page/userinfo').default
       }, {
         path: 'analysis',
         name: 'analysis',
-        component: require('@/page/analysis').defalult
+        component: require('@/page/analysis').default
       }]
     },
     {

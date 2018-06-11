@@ -1,6 +1,6 @@
 <template>
-  <el-card>
-    <h4>用户名： {{username}}</h4>
+  <el-card style="height:500px;text-aligin:center;padding:20px;">
+    <h4>用户： {{username}}</h4>
   </el-card>
 </template>
 <script>
