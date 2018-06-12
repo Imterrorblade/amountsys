@@ -44,7 +44,6 @@ router.beforeEach((to, from, next) => {
   } else {
     if (localStorage.getItem('username')) {
       next()
-      console.log(to)
     } else {
       next({path: '/login'})
     }

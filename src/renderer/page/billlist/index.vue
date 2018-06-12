@@ -4,7 +4,7 @@
         <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
             <el-form :inline="true">
                 <el-form-item>
-                  <el-date-picker type="date" placeholder="截止日期" v-model="filters.data.date"></el-date-picker>
+                  <el-date-picker type="date" placeholder="截止日期" v-model="date"></el-date-picker>
                 </el-form-item>
                 <el-form-item>
                     <el-button @click="getDataList" type="primary" icon="el-icon-search">查询</el-button>
@@ -71,6 +71,7 @@
   export default {
     data () {
       return {
+        date: new Date(),
         filters: {
           pageNo: 1,
           pageSize: 10,
@@ -127,8 +128,9 @@
       // 获取账单数据
       getDataList () {
         const filters = Object.assign({}, this.filters)
-        filters.data.date.setHours(23)
-        filters.data.date.setMinutes(59)
+        this.date.setHours(23)
+        this.date.setMinutes(59)
+        filters.data.date = {'$lte': this.date}
         this.listLoading = true
         service.getBillList(filters).then((res) => {
           this.dataList = Object.assign([], res.data)

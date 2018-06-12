@@ -31,9 +31,6 @@ const service = {
   getBillList: function (filter) {
     let param = JSON.parse(JSON.stringify(filter))
     return new Promise(function (resolve, reject) {
-      param.data.date = {
-        '$lte': param.data.date
-      }
       param.data.user = localStorage.getItem('username')
       dataApi.find('Bill', param, function (response) {
         if (response instanceof Error) {

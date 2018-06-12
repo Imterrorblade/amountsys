@@ -31,7 +31,7 @@
         }, {
           label: '统计分析',
           children: [{
-            label: '账单统计',
+            label: '收入统计',
             path: '/page/analysis'
           }]
         }]
