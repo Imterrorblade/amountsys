@@ -1,13 +1,13 @@
-const { mongoose } = require('./index')
 // const mongoose = require('mongoose')
-const models = require('./models')
+import models from './models'
+import dataBase from './index'
 const modelMap = {
   models: {},
   modelstag: {}
 }
 for (let i = 0; i < models.length; i++) {
-  let schema = new mongoose.Schema(models[i].model)
-  modelMap[models[i].name] = mongoose.model(models[i].name, schema)
+  let schema = new dataBase.mongoose.Schema(models[i].model)
+  modelMap[models[i].name] = dataBase.mongoose.model(models[i].name, schema)
   modelMap.models[models[i].name] = models[i].model
   modelMap.modelstag[models[i].name] = models[i].__id
 }
@@ -34,4 +34,4 @@ modelMap.methods = {
     })
   }
 }
-module.exports = modelMap
+export default modelMap

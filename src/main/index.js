@@ -20,13 +20,15 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
+    height: 535,
     useContentSize: true,
-    width: 1000,
-    autoHideMenuBar: true
+    width: 900,
+    autoHideMenuBar: false,
+    show: false
   })
 
   mainWindow.loadURL(winURL)
+  mainWindow.show()
 
   mainWindow.on('closed', () => {
     mainWindow = null

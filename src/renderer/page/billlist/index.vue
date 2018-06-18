@@ -25,7 +25,7 @@
                 </el-table-column>
                 <el-table-column prop="content" label="商品" min-width="200" >
                 </el-table-column>
-                <el-table-column prop="money" label="消费（元）" width="200" >
+                <el-table-column prop="money" label="售价（元）" width="200" >
                 </el-table-column>
                 <el-table-column label="操作" width="150">
                     <template scope="scope">
@@ -127,6 +127,9 @@
       },
       // 获取账单数据
       getDataList () {
+        if (!this.date) {
+          return
+        }
         const filters = Object.assign({}, this.filters)
         this.date.setHours(23)
         this.date.setMinutes(59)

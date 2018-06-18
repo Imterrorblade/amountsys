@@ -87,17 +87,6 @@ const service = {
         }
       })
     })
-  },
-  setWorkPath (path) {
-    return new Promise(function (resolve, reject) {
-      dataApi.setWorkPath(path, (response) => {
-        if (response instanceof Error) {
-          reject(response)
-        } else {
-          resolve(response)
-        }
-      })
-    })
   }
 }
 export default service

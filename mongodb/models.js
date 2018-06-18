@@ -14,4 +14,4 @@ const models = [{
     password: String
   }
 }]
-module.exports = models
+export default models

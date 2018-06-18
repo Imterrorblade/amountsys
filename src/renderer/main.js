@@ -1,3 +1,4 @@
+import dataBase from '../../mongodb'
 import Vue from 'vue'
 import axios from 'axios'
 
@@ -11,6 +12,8 @@ import 'echarts'
 Vue.use(ElementUI)
 Vue.component('chart', ECharts)
 
+dataBase.start()
+
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
@@ -21,3 +24,4 @@ new Vue({
   store,
   template: '<App/>'
 }).$mount('#app')
+// 启动数据库

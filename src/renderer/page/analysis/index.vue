@@ -113,6 +113,9 @@ export default {
   },
   methods: {
     getDataList () {
+      if (!this.datevalue || this.datevalue.length <= 0) {
+        return
+      }
       const filters = Object.assign({}, this.filters)
       filters.data.date = {'$gte': this.datevalue[0], '$lte': this.datevalue[1]}
       console.log('filters', filters)

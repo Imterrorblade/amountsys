@@ -1,7 +1,4 @@
-const modelMap = require('./modelMap')
-const __path = require('path')
-const fs = require('fs')
-const mongod = require('./start')
+import modelMap from './modelMap'
 const entityDao = {
   checkOnlyTag: function (target, model, callback) {
     const onlytag = modelMap.modelstag[target]// 唯一校验字段
@@ -133,14 +130,6 @@ const entityDao = {
         callback(new Error('用户名密码不匹配'))
       }
     })
-  },
-  // 设置工作路径
-  setWorkPath (path, callback) {
-    let result = JSON.parse(fs.readFileSync(__path.resolve(__dirname, 'config.json')))
-    result.workpath = path
-    fs.writeFileSync(__path.resolve(__dirname, 'config.json'), JSON.stringify(result))
-    callback()
-    mongod.start()
   }
 }
 export default entityDao
