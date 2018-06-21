@@ -1,6 +1,7 @@
 'use strict'
 
 import { app, BrowserWindow } from 'electron'
+import dataBase from '../../mongodb'
 
 /**
  * Set `__static` path to static files in production
@@ -20,9 +21,9 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 535,
+    height: 600,
     useContentSize: true,
-    width: 900,
+    width: 1200,
     autoHideMenuBar: false,
     show: false
   })
@@ -48,6 +49,7 @@ app.on('activate', () => {
     createWindow()
   }
 })
+dataBase.start()
 
 /**
  * Auto Updater
