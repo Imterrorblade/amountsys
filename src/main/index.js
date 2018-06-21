@@ -1,7 +1,6 @@
 'use strict'
 
 import { app, BrowserWindow } from 'electron'
-import dataBase from '../../mongodb'
 
 /**
  * Set `__static` path to static files in production
@@ -49,7 +48,6 @@ app.on('activate', () => {
     createWindow()
   }
 })
-dataBase.start()
 
 /**
  * Auto Updater
